@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginEnd="6dp"
+    android:layout_marginStart="6dp"
+    android:layout_marginBottom="3dp"
+    android:layout_marginTop="3dp"
+
+    android:background="@drawable/rowshape" android:layout_width="match_parent"
+    android:layout_height="125dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:background="@drawable/rowshape"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="0dp"
+                android:src="@drawable/default_product"
+                android:background="@drawable/dashedline"
+                android:padding="5dp"
+                android:id="@+id/productimgd"
+                android:layout_marginEnd="3dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_weight="2"
+                android:layout_height="match_parent" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="4.5"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="@dimen/large"
+                    android:id="@+id/nameproductd"
+                    android:gravity="start"
+                    android:singleLine="true"
+
+                    android:textColor="@color/black"
+                    android:layout_gravity="top|start"
+                    android:text="@string/product"
+                    android:layout_margin="3dp"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center|start"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:textStyle="bold"
+                        android:singleLine="true"
+                        android:layout_gravity="start|center"
+                        android:text="@string/unitprice"
+                        android:textSize="@dimen/medium"
+                        android:textColor="@color/black"
+                        android:layout_margin="3dp"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:textStyle="bold"
+                        android:singleLine="true"
+                        android:layout_gravity="center|start"
+                        android:textSize="@dimen/medium"
+                        android:id="@+id/unitpricecd"
+                        android:text="50"
+                        android:gravity="start"
+
+                        android:textColor="@color/black"
+                        android:layout_margin="3dp"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="bottom|start"
+                    android:textSize="@dimen/medium"
+                    android:gravity="start"
+                    android:singleLine="true"
+                    android:id="@+id/numberproductd"
+                    android:text="@string/barcode"
+                    android:textColor="@color/black"
+                    android:layout_margin="3dp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:orientation="vertical"
+                android:layout_weight="2.6"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_weight="1.2"
+                    android:paddingTop="15dp"
+                    android:layout_margin="5dp"
+                    android:layout_height="0dp">
+                     <TextView
+                         android:layout_width="wrap_content"
+                         android:text="@string/items"
+                         android:textSize="@dimen/medium"
+                         android:textColor="@color/black"
+                         android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:id="@+id/numitemsd"
+                        android:textSize="@dimen/x_small"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:text="0.0"
+                    android:id="@+id/totalitemscd"
+                    android:textSize="@dimen/large"
+                    android:textStyle="bold"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/dashedline"
+                    android:layout_weight="1.6"/>
+            </LinearLayout>
+        </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/shopingbasketnav"
+        android:title="@string/shoppingbasket"
+        android:icon="@drawable/shoppingbasket"
+
+        />
+
+    <item android:id="@+id/orderlistnav"
+        android:icon="@drawable/sales"
+        android:title="@string/orderlist"
+
+        />
+    <item android:id="@+id/readernav"
+        android:icon="@drawable/barscanner"
+        android:title="@string/barcodereader"
+
+        />
+    <item android:id="@+id/favouritnav"
+        android:icon="@drawable/favourit"
+        android:title="@string/favouritproducts"
+
+        />
+    <item android:id="@+id/latestnav"
+        android:icon="@drawable/offers"
+
+        android:title="@string/latestoffers"
+
+        />
+
+
+    <item android:id="@+id/aboutnav"
+        android:icon="@drawable/about"
+        android:title="@string/aboutus"
+
+        />
+    <item android:id="@+id/settingnav"
+        android:icon="@drawable/setting"
+
+        android:title="@string/setting"
+
+        />
+    <item android:id="@+id/logoutnav"
+        android:icon="@drawable/logout"
+        android:title="@string/logout"
+
+        />
+
+
+</menu>

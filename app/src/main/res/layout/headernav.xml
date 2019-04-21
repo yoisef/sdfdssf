@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="160dp"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:orientation="horizontal"
+    android:background="@color/green"
+    android:gravity="bottom">
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_marginStart="10dp"
+        android:id="@+id/consumerimg"
+        android:background="@drawable/square"
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="center"
+        android:padding="5dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginTop="20dp"
+        android:layout_height="80dp" />
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_marginBottom="40dp"
+        android:layout_marginTop="40dp"
+        android:paddingTop="10dp"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:layout_weight="2"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="@dimen/medium"
+                android:text="@string/welcomtxt"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:fontFamily="serif"
+                android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/x_small"
+            android:singleLine="true"
+            android:gravity="center"
+            android:id="@+id/consumernam"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:layout_marginStart="5dp"
+            android:fontFamily="serif"
+            android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:textColor="@color/white"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:gravity="bottom"
+            android:textStyle="bold"
+            android:id="@+id/accountdatanav"
+            android:textSize="@dimen/medium"
+            android:text="@string/accountdata"
+            android:fontFamily="serif"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+
+
+</LinearLayout>
