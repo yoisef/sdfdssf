@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -12,9 +13,12 @@ import android.support.v7.widget.Toolbar;
 import java.util.ArrayList;
 import java.util.List;
 
+import werpx.marketopia.GridAutofitLayoutManager;
 import werpx.marketopia.R;
 import werpx.marketopia.RoomDatabase.Productltable;
+import werpx.marketopia.RoomDatabase.Sqlitetable;
 import werpx.marketopia.RoomDatabase.productViewmodel;
+import werpx.marketopia.Utils;
 import werpx.marketopia.adapters.favouritadapter;
 
 public class Favourit extends AppCompatActivity {
@@ -23,12 +27,18 @@ public class Favourit extends AppCompatActivity {
     RecyclerView recyclerView;
     favouritadapter favouritadapter;
     private productViewmodel mWordViewModel;
-    List<Productltable> favouritmenu;
+    List<Sqlitetable> favouritmenu;
+    List<Sqlitetable> sqlitetables;
+    Utils utils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favourit);
+
+        utils=new Utils(this);
+
+        sqlitetables=utils.getMydatabase().getproductsitems();
 
         favouritmenu=new ArrayList<>();
 
@@ -45,6 +55,18 @@ public class Favourit extends AppCompatActivity {
 
 
 
+
+        for (int i=0;i<sqlitetables.size();i++)
+        {
+            if (sqlitetables.get(i).getIsfavourit()==1)
+            {
+                favouritmenu.add(sqlitetables.get(i));
+            }
+        }
+        favouritadapter.setproducts(favouritmenu);
+
+
+/*
         mWordViewModel = ViewModelProviders.of(this).get(productViewmodel.class);
         mWordViewModel.getAllproductroom().observe(this, new Observer<List<Productltable>>() {
             @Override
@@ -61,9 +83,8 @@ public class Favourit extends AppCompatActivity {
 
             }
         });
-
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+*/
+        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
         recyclerView.setAdapter(favouritadapter);
 
         setSupportActionBar(mtoolbar);
@@ -71,6 +92,7 @@ public class Favourit extends AppCompatActivity {
         // getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
     }
 
     @Override

@@ -50,7 +50,7 @@ public class showproduct_adapter extends RecyclerView.Adapter<showproduct_adapte
 
     Context mycontext;
     private productdatabase mydatabase;
-    private List<Productltable> products;
+    private List<Sqlitetable> products;
     private List<mytable> myproducts;
     private productViewmodel mWordViewModel;
     private Call<Rootproductdetail> mcall;
@@ -180,15 +180,20 @@ public class showproduct_adapter extends RecyclerView.Adapter<showproduct_adapte
                     {
 
                         products.get(position).setIsfavourit(1);
-                       mWordViewModel.updateproductroom(1,Long.parseLong(products.get(position).getBarcode()));
+
+                       boolean ff= mydatabase.updatefavcondition(products.get(position).getBarcode(),1);
+                        Toast.makeText(mycontext,"1"+String.valueOf(ff),Toast.LENGTH_LONG).show();
+                     //  mWordViewModel.updateproductroom(1,Long.parseLong(products.get(position).getBarcode()));
                       notifyDataSetChanged();
 
                     }
                     else{
 
                         products.get(position).setIsfavourit(0);
-                       mWordViewModel.updateproductroom(0,Long.parseLong(products.get(position).getBarcode()));
+                        boolean ff=  mydatabase.updatefavcondition(products.get(position).getBarcode(),0);
+                     //  mWordViewModel.updateproductroom(0,Long.parseLong(products.get(position).getBarcode()));
                        // notifyDataSetChanged();
+                        Toast.makeText(mycontext,"0"+String.valueOf(ff),Toast.LENGTH_LONG).show();
                         notifyDataSetChanged();
 
                     }
@@ -223,7 +228,7 @@ public class showproduct_adapter extends RecyclerView.Adapter<showproduct_adapte
         return products.size();
     }
 
-    public  void setproducts(List<Productltable> prducts) {
+    public  void setproducts(List<Sqlitetable> prducts) {
         products = prducts;
         notifyDataSetChanged();
     }

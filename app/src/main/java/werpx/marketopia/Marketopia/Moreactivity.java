@@ -38,15 +38,15 @@ public class Moreactivity extends AppCompatActivity {
     FloatingActionButton floatingActionButton;
     TextView totalordercoast;
     productViewmodel mWordViewModel;
-    List<Productltable> products;
+  //  List<Productltable> products;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_moreactivity);
-        products=new ArrayList<>();
-        getproductsroom();
+      //  products=new ArrayList<>();
+    //    getproductsroom();
         findviewbyid();
 
         settotalcoast();
@@ -60,7 +60,7 @@ public class Moreactivity extends AppCompatActivity {
         offeradapter=new showproduct_adapter(this);
         catg1=new showproduct_adaptercat1(this);
 
-      //List<Sqlitetable> products= utils.getMydatabase().getproductsitems();
+      List<Sqlitetable> products= utils.getMydatabase().getproductsitems();
 
         offeradapter.setproducts(products);
         catg1.setproducts(products);
@@ -110,7 +110,7 @@ public class Moreactivity extends AppCompatActivity {
 
 
     }
-
+/*
     public void getproductsroom()
     {
         mWordViewModel = ViewModelProviders.of(this).get(productViewmodel.class);
@@ -122,6 +122,7 @@ public class Moreactivity extends AppCompatActivity {
             }
         });
     }
+    */
     public  void  settotalcoast()
     {
 

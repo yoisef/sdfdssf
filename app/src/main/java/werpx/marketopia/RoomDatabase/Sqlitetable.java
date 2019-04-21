@@ -17,6 +17,10 @@ public class Sqlitetable {
 
 
 
+    private int isfavourit;
+
+
+
 
     private String localnam;
 
@@ -34,7 +38,8 @@ public class Sqlitetable {
 
 
     public Sqlitetable(String pid,String name, String barcode, String price,
-                       String imge, String description,String localname,byte[] imgblob
+                       String imge, String description,String localname,byte[] imgblob,
+                       int isfavourit
 
 
 
@@ -49,6 +54,7 @@ public class Sqlitetable {
 
         this.localnam=localname;
         this.imge=imge;
+        this.isfavourit=isfavourit;
 
 
     }
@@ -124,6 +130,14 @@ public class Sqlitetable {
 
     public void setImgblob(byte[] imgblob) {
         this.imgblob = imgblob;
+    }
+
+    public int getIsfavourit() {
+        return isfavourit;
+    }
+
+    public void setIsfavourit(int isfavourit) {
+        this.isfavourit = isfavourit;
     }
 
 

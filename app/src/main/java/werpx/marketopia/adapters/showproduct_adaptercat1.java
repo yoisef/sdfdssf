@@ -49,7 +49,7 @@ public class showproduct_adaptercat1 extends RecyclerView.Adapter<showproduct_ad
 
     Context mycontext;
     private productdatabase mydatabase;
-    private List<Productltable> products;
+    private List<Sqlitetable> products;
     private List<mytable> myproducts;
     private productViewmodel mWordViewModel;
     private Call<Rootproductdetail> mcall;
@@ -200,7 +200,7 @@ public class showproduct_adaptercat1 extends RecyclerView.Adapter<showproduct_ad
         return products.size();
     }
 
-    public  void setproducts(List<Productltable> prducts) {
+    public  void setproducts(List<Sqlitetable> prducts) {
         products = prducts;
         notifyDataSetChanged();
     }

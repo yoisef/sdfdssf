@@ -41,6 +41,7 @@ import werpx.marketopia.RoomDatabase.Productltable;
 import werpx.marketopia.RoomDatabase.Sqlitetable;
 import werpx.marketopia.RoomDatabase.mytable;
 import werpx.marketopia.RoomDatabase.productViewmodel;
+import werpx.marketopia.Utils;
 import werpx.marketopia.productdatabase;
 import werpx.marketopia.productmodels.Rootproductdetail;
 
@@ -49,7 +50,8 @@ public class favouritadapter extends RecyclerView.Adapter<favouritadapter.viewho
 
     Context mycontext;
     private productdatabase mydatabase;
-    private List<Productltable> products;
+    showproduct_adapter adapter;
+    private List<Sqlitetable> products;
     private List<mytable> myproducts;
     private productViewmodel mWordViewModel;
     private Call<Rootproductdetail> mcall;
@@ -58,7 +60,7 @@ public class favouritadapter extends RecyclerView.Adapter<favouritadapter.viewho
     String CurrentLang;
     private Configuration configuration;
     private int applanguage;
-
+    Utils utils;
     Boolean checkfav=true;
 
 
@@ -67,8 +69,10 @@ public class favouritadapter extends RecyclerView.Adapter<favouritadapter.viewho
     public favouritadapter(Context con)
     {
         this.mycontext=con;
+        utils=new Utils(con);
         products=new ArrayList<>();
         CurrentLang = Locale.getDefault().getLanguage();
+        adapter=new showproduct_adapter(con);
 
         prefs = mycontext.getSharedPreferences("token", Context.MODE_PRIVATE);
         usertoken=prefs.getString("usertoken","def");
@@ -165,24 +169,19 @@ public class favouritadapter extends RecyclerView.Adapter<favouritadapter.viewho
                 holder.favouritspeacial.setImageResource(R.drawable.heartred);
             }
 
-            holder.favouritspeacial.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+          holder.favouritspeacial.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
 
-                    if (products.get(position).getIsfavourit()==0)
-                    {
-                        mWordViewModel.updateproductroom(1,Long.parseLong(products.get(position).getBarcode()));
+                  mydatabase.updatefavcondition(products.get(position).getBarcode(),0);
+                  products.remove(position);
 
-                    }
-                    else{
-                        mWordViewModel.updateproductroom(0,Long.parseLong(products.get(position).getBarcode()));
+                  adapter.setproducts(utils.getMydatabase().getproductsitems());
+                  adapter.notifyDataSetChanged();
 
-                    }
-
-                        // new RegisterAsyntask().execute();
-
-                }
-            });
+                  notifyDataSetChanged();
+              }
+          });
 
 
 
@@ -209,7 +208,7 @@ public class favouritadapter extends RecyclerView.Adapter<favouritadapter.viewho
         return products.size();
     }
 
-    public  void setproducts(List<Productltable> prducts) {
+    public  void setproducts(List<Sqlitetable> prducts) {
         products = prducts;
         notifyDataSetChanged();
     }

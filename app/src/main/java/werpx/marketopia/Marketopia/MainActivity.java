@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView mynavigation;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
-    private List<Sqlitetable> products;
+    private List<Sqlitetable> offers;
     private FloatingActionButton floatingActionButton;
     private TextView coasttotaltxt,moreoffer,morecateg1,morecateg2;
     private  List<Productltable> productroom;
@@ -96,44 +96,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         utils=new Utils(this);
+
+        offers = utils.getMydatabase().getproductsitems();
 
         productroom=new ArrayList<>();
         findviewbyid();
-        getproductsroomitem();
-
-        if (utils.haveNetworkConnection())
-        {
-
-            if (productroom.size() == 0) {
-                // refreshcat1.setRefreshing(true);
-                //   refreshcat2.setRefreshing(true);
-                //  refreshoffer.setRefreshing(true);
-                getallproductsbb();
-            }
-            else{
-                //  List<Sqlitetable> offers = utils.getMydatabase().getproductsitems();
-                adapteroffer.setproducts(productroom);
-                adaptercateg.setproducts(productroom);
-                offersrecycle.setAdapter(adapteroffer);
-                cat1recycle.setAdapter(adaptercateg);
-                cat2recycle.setAdapter(adaptercateg);
-                allproductrecycle.setAdapter(adaptercateg);
-            }
-        }
-        else {
-
-            refreshcat1.setRefreshing(false);
-            refreshcat2.setRefreshing(false);
-            refreshoffer.setRefreshing(false);
-            //  List<Sqlitetable> offers = utils.getMydatabase().getproductsitems();
-            adapteroffer.setproducts(productroom);
-            adaptercateg.setproducts(productroom);
-            offersrecycle.setAdapter(adapteroffer);
-            cat1recycle.setAdapter(adaptercateg);
-            cat2recycle.setAdapter(adaptercateg);
-            allproductrecycle.setAdapter(adaptercateg);
-        }
 
 
 
@@ -141,14 +110,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        utils=new Utils(this);
-        imgscancamera=findViewById(R.id.scancameraa);
-        imgscancamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this,Camera_activity.class));
-            }
-        });
+
+
+
+
 
         floatingActionButton=findViewById(R.id.fab);
         coasttotaltxt=findViewById(R.id.shoppingcoasttxt);
@@ -156,8 +121,8 @@ public class MainActivity extends AppCompatActivity {
 
         receiver=new NetworkBroadcastreciever();
         filter=new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        products=new ArrayList<>();
-        products=utils.getMydatabase().getproductsitems();
+
+
         registerNetworkBroadcastForNougat();
 
 
@@ -199,6 +164,38 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        if (utils.haveNetworkConnection())
+        {
+
+            if (offers.size() == 0) {
+                // refreshcat1.setRefreshing(true);
+                //   refreshcat2.setRefreshing(true);
+                //  refreshoffer.setRefreshing(true);
+                getallproductsbb();
+            }
+            else{
+
+                adapteroffer.setproducts(offers);
+                adaptercateg.setproducts(offers);
+                offersrecycle.setAdapter(adapteroffer);
+                cat1recycle.setAdapter(adaptercateg);
+                cat2recycle.setAdapter(adaptercateg);
+                allproductrecycle.setAdapter(adaptercateg);
+            }
+        }
+        else {
+
+            refreshcat1.setRefreshing(false);
+            refreshcat2.setRefreshing(false);
+            refreshoffer.setRefreshing(false);
+
+            adapteroffer.setproducts(offers);
+            adaptercateg.setproducts(offers);
+            offersrecycle.setAdapter(adapteroffer);
+            cat1recycle.setAdapter(adaptercateg);
+            cat2recycle.setAdapter(adaptercateg);
+            allproductrecycle.setAdapter(adaptercateg);
+        }
 
 
 
@@ -219,15 +216,15 @@ public class MainActivity extends AppCompatActivity {
 
                 if (editable.length() == 0) {
                     allproductrecycle.setVisibility(View.GONE);
-                    adaptercateg.setproducts(productroom);
+                    adaptercateg.setproducts(offers);
                 }
                 else if (editable.toString().matches("\\d+(?:\\.\\d+)?"))
                 {
                    String barcodefinal = convertToEnglish(editable.toString());
-                    //getrpoductbybarcodeoffline(barcodefinal)    ;
+                    getrpoductbybarcodeoffline(barcodefinal)    ;
                 }
                 else {
-                    //searchforproductbyNameoffline(editable.toString());
+                    searchforproductbyNameoffline(editable.toString());
                 }
 
             }
@@ -483,7 +480,7 @@ public class MainActivity extends AppCompatActivity {
         return newValue;
     }
 
-/*
+
     public void getrpoductbybarcodeoffline(String barcode)
     {
        Sqlitetable mytable = mydatabase.getdataforrowinproduct(barcode);
@@ -493,7 +490,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         List<Sqlitetable> allproducts = utils.getMydatabase().getproductsitems();
-        List<Productltable> searchproducts = new ArrayList<>();
+        List<Sqlitetable> searchproducts = new ArrayList<>();
         searchproducts.clear();
 
         if (mytable != null) {
@@ -520,13 +517,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    */
+
 
     public void getallproductsbb() {
 
 
-        if (productroom.size() != 0) {
-            mWordViewModel.deleteallroom();
+        if (offers.size() != 0) {
+           utils.getMydatabase().deleteproductitems();
 
         }
 
@@ -582,7 +579,7 @@ public class MainActivity extends AppCompatActivity {
         this.registerReceiver(receiver,filter);
 
     }
-/*
+
     private void searchforproductbyNameoffline (String searchname){
         List<Sqlitetable> allproducts = utils.getMydatabase().getproductsitems();
         List<Sqlitetable> searchproducts = new ArrayList<>();
@@ -612,7 +609,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-    */
+
 
     protected void unregisterNetworkChanges() {
         try {
@@ -627,6 +624,23 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
 
         unregisterNetworkChanges();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        List<Sqlitetable> offer=utils.getMydatabase().getproductsitems();
+        offers.clear();
+        offers.addAll(offer);
+        adapteroffer.setproducts(offers);
+        adapteroffer.notifyDataSetChanged();
+        adaptercateg.setproducts(offers);
+        adaptercateg.notifyDataSetChanged();
+        offersrecycle.setAdapter(adapteroffer);
+        cat1recycle.setAdapter(adaptercateg);
+        cat2recycle.setAdapter(adaptercateg);
+        allproductrecycle.setAdapter(adaptercateg);
     }
 
     @Override
@@ -807,12 +821,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    class insertproducts extends AsyncTask<List<Product>,Void,List<Productltable> > {
+    class insertproducts extends AsyncTask<List<Product>,Void,List<Sqlitetable> > {
 
        List<Productltable> products=new ArrayList<>();
 
         @Override
-        protected List<Productltable> doInBackground(List<Product>... lists) {
+        protected List<Sqlitetable> doInBackground(List<Product>... lists) {
 
 
             List<Product> myproducts=lists[0];
@@ -841,22 +855,22 @@ public class MainActivity extends AppCompatActivity {
 
                     String desc = myproducts.get(i).getDescription();
                     String id = myproducts.get(i).getId();
-                    Productltable productltable=new Productltable(namepr,price,barcode,desc,imgurl,localnam,0,id);
-                    mWordViewModel.insertroom(productltable);
-                   // utils.getMydatabase().insertdatalistproducts(namepr, barcode, price, imgurl, desc, id, localnam, null);
+                   // Productltable productltable=new Productltable(namepr,price,barcode,desc,imgurl,localnam,0,id);
+                  //  mWordViewModel.insertroom(productltable);
+                    utils.getMydatabase().insertdatalistproducts(namepr, barcode, price, imgurl, desc, id, localnam, null);
 
                 }
 
             }
-            return mWordViewModel.getAllproductroom().getValue();
+            return utils.getMydatabase().getproductsitems();
         }
 
         @Override
-        protected void onPostExecute(List<Productltable> aVoid) {
+        protected void onPostExecute(List<Sqlitetable> aVoid) {
 
 
             startService(new Intent(MainActivity.this, Downloadimageservice.class));
-           // List<Sqlitetable> offers = utils.getMydatabase().getproductsitems();
+            //List<Sqlitetable> offers = utils.getMydatabase().getproductsitems();
             adapteroffer.setproducts(aVoid);
             adaptercateg.setproducts(aVoid);
             offersrecycle.setAdapter(adapteroffer);

@@ -43,6 +43,7 @@ public class productdatabase extends SQLiteOpenHelper {
     public static final String columnf = "Pro_id";
     public static final String columng = "Pro_localnam";
     public static final String columnh = "Prod_img";
+    public static final String columni = "Prod_fav";
 
 
     public static final String column1 = "product_bar";
@@ -77,7 +78,7 @@ public class productdatabase extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        String example = "CREATE TABLE " + Tablename1 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,Pro_name TEXT ,Pro_bar TEXT ,Pro_price TEXT ,Pro_img TEXT ,Pro_detail TEXT,Pro_id TEXT,Pro_localnam TEXT,Prod_img BLOB);";
+        String example = "CREATE TABLE " + Tablename1 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,Pro_name TEXT ,Pro_bar TEXT ,Pro_price TEXT ,Pro_img TEXT ,Pro_detail TEXT,Pro_id TEXT,Pro_localnam TEXT,Prod_img BLOB,Prod_fav INTEGER DEFAULT 0);";
         String oflinetable = "CREATE TABLE " + Tablename2 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,ornum TEXT ,ordata TEXT  ,oramount TEXT ,orunits TEXT ,orbarcodes TEXT,orretailerids TEXT ,orproductids TEXT ,orlives TEXT ,orquantity TEXT);";
         String offlineproducts = "CREATE TABLE " + Tablename3 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,Pro_name TEXT ,Pro_bar TEXT ,Pro_price TEXT ,Pro_img TEXT ,Pro_detail TEXT);";
         String productsids = "CREATE TABLE " + Tablename4 + " (ID INTEGER PRIMARY KEY AUTOINCREMENT ,productid TEXT);";
@@ -222,7 +223,7 @@ public class productdatabase extends SQLiteOpenHelper {
             int indexxxxx = cursor.getColumnIndexOrThrow(columnd);
            byte[] imgblob = cursor.getBlob(indexxxxx);
 
-            myproducts.add(new Sqlitetable(null,null,barcode,price,img,null,localnam,null));
+            myproducts.add(new Sqlitetable(null,null,barcode,price,img,null,localnam,null,0));
 
         }
         cursor.close();
@@ -234,6 +235,59 @@ public class productdatabase extends SQLiteOpenHelper {
 
         return myproducts;
     }
+
+    public Boolean insertdatalistproducts(String name, String bar, String price, String img, String detail ,String idproduct,String localnam,byte[] imgblob,Integer fav) {
+
+
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(columna, name);
+        contentValues.put(columnb, bar);
+        contentValues.put(columnc, price);
+        contentValues.put(columnd, img);
+        contentValues.put(columne, detail);
+        contentValues.put(columnf,idproduct);
+        contentValues.put(columng,localnam);
+        contentValues.put(columnh,imgblob);
+        contentValues.put(columni,fav);
+
+        long result = db.insert(Tablename1, null, contentValues);
+
+        if (result == -1) {
+            return false;
+
+        } else {
+            return true;
+        }
+    }
+
+    public Boolean updatefavcondition(String barcode,int value) {
+        SQLiteDatabase dbr = this.getReadableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        long result=-1;
+
+        String getrow = "SELECT Prod_fav FROM " + Tablename1 + " WHERE " + columnb + " = " + barcode + ";";
+
+
+                cv.put(columni, value);
+
+               result = db.update(Tablename1, cv, "Pro_bar= '" + barcode + "'", null);
+
+        if (result == -1) {
+            return false;
+
+        } else {
+            return true;
+        }
+
+
+
+
+
+    }
+
 
     public List<Sqlitetable> getofflinefinalproducts()
     {
@@ -259,7 +313,7 @@ public class productdatabase extends SQLiteOpenHelper {
             byte[] imgblob = cursor.getBlob(indexxxxk);
 
 
-            myproducts.add(new Sqlitetable(null,null,barcode,price,img,null,localnam,null));
+            myproducts.add(new Sqlitetable(null,null,barcode,price,img,null,localnam,null,0));
 
         }
         cursor.close();
@@ -451,9 +505,11 @@ public class productdatabase extends SQLiteOpenHelper {
                 String idproduct=cursor.getString(indexproduct);
             int indeximgblob=cursor.getColumnIndexOrThrow(columnh);
           byte[] blob=cursor.getBlob(indeximgblob);
+            int fav=cursor.getColumnIndexOrThrow(columni);
+           int j=cursor.getInt(fav);
 
 
-            myproducts.add(new Sqlitetable(idproduct,name,barcode,price,img,null,namelocal,blob));
+            myproducts.add(new Sqlitetable(idproduct,name,barcode,price,img,null,namelocal,blob,j));
 
             }
             cursor.close();
@@ -498,7 +554,7 @@ public class productdatabase extends SQLiteOpenHelper {
              int indeximg=cursor.getColumnIndexOrThrow(columnh);
             byte[]imgblob=cursor.getBlob(indeximg);
 
-             mytable = new Sqlitetable(idproduct,nam, bar, price, img, detail,localnam,imgblob);
+             mytable = new Sqlitetable(idproduct,nam, bar, price, img, detail,localnam,imgblob,0);
      }
      db.setTransactionSuccessful();
 
@@ -539,7 +595,7 @@ public class productdatabase extends SQLiteOpenHelper {
                byte[] imgblon = cursor.getBlob(indexxxx);
 
 
-                mytable = new Sqlitetable(null,nam, bar, price, null, null,namlocal,imgblon);
+                mytable = new Sqlitetable(null,nam, bar, price, null, null,namlocal,imgblon,0);
             }
             db.setTransactionSuccessful();
 
@@ -578,7 +634,7 @@ public class productdatabase extends SQLiteOpenHelper {
                byte[] imgblob = cursor.getBlob(indexxx);
 
 
-                mytable = new Sqlitetable(null,nam, bar, price, null, null,namlocal,imgblob);
+                mytable = new Sqlitetable(null,nam, bar, price, null, null,namlocal,imgblob,0);
             }
             db.setTransactionSuccessful();
 
